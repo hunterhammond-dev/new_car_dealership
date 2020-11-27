@@ -1,4 +1,5 @@
-
+<!-- Lingzhi Nelson -->
+<!-- 11/27/2020 -->
 <!DOCTYPE html>
 <html>
 <body>
@@ -7,6 +8,8 @@
 <h3>Enter customer ID or that customer's first and last name for order history</h3>
 
 <?php
+	// this php has all the commonly used functions sucn as database connection, test_inputs
+	include 'Utility.php'; 
 
 	$customeridi = "Unknown";	
 	$fnamei = "Unknown";
@@ -45,7 +48,7 @@
 	<p>OR</p>
 	<p>
 		<label for="fname">First name:</label>
-		<input type="text" id="fname" name="fname" value=<?php echo $fname ?>><br>
+		<input type="text" id="fname" name="fname" value=<?php echo $fname ?>>&nbsp &nbsp
 		<label for="lname">Last name:</label>
 		<input type="text" id="lname" name="lname" value=<?php echo $lname ?>><br>
 	</p>
@@ -54,22 +57,8 @@
 <!-- end form -->
 
 <?php
-	// Go get the User name and password for the MySQL access.
-	$user_pw = getUser();
-	// Create a connection to the database server.
-	$dbhost = "localhost:3308";
-	$dbuser = $user_pw[0];
-	$dbpass = $user_pw[1];
-	$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
-	if (! $conn ) {
-		echo "Error: Unable to connect to MySQL." . "<br>\n";
-		echo "Debugging errno: " . mysqli_connect_errno() . "<br>\n";
-		echo "Debugging error: " . mysqli_connect_error() . "<br>\n";
-		die("Could not connect: " . mysqli_error()); 
-	}
-
-	//connect to cardealership schema
-	mysqli_select_db($conn, "cardealership");
+	// establish db connection
+	OpenCon();
 
 	//Query and display customer id and customer name based on user inputs
 	$customerSql = "SELECT customerNumber, CONCAT(customerFirstName, ' ', customerLastName) AS customerName FROM cardealership.customers";
@@ -82,7 +71,7 @@
 			echo "Empty field! Enter customer id or both first name and last name!<br>";
 		}
 		//close connection and exit the program	
-		mysqli_close($conn);
+		CloseCon();
 		return;
 	}
 
@@ -93,12 +82,13 @@
 		 
 		 mysqli_free_result($result); //free result set
 
+		 echo "<br>$customerName <br>";
 		 echo "Customer ID:  $customerid <br>";
-		 echo "Customer Name: $customerName <br>";
+		 
 	} else { // couldn't find the customer
 		echo "Can't find this customer. Verify your inputs or ". 
 			"go to <a href=\"#\">Customers</a> to add this customer first!"; // note: need to add the link of the customer page here
-		mysqli_close($conn);
+		CloseCon();
 		return; //don't run the following code
 	}	   	
 ?>
@@ -164,47 +154,24 @@
 		 // finish constructing the orders table
 		 // redirect to add a new order page here
 		 printf(
-			"	<tr>
-					<td colspan=\"2\"> <a href=\"AddOrder.php?customerid=$customerid\">Add An Order</a></td>
-				</tr>
+			"<tr><td colspan=\"5\"><button onclick=\"document.location='AddOrder.php?customerid=$customerid&customerName=$customerName'\" style=\"background-color:green;\">Add an Order</button></td></tr>
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan=\"2\"> Total Number of Orders</td> <td>%s</td>
+					<td colspan=\"1\"> Total Orders: %s</td> 
 				</tr>
 			</tfoot>
 		</table>", $count
 		);	 
 	}//end if
-?>              
 
-<?php
 	// this php querys and returns the ordersdetail based on orderNumber passed in
 	if (isset($_GET["ordernum"])) {
 		include 'OrderDetails.php'; 
 	}
-?>
 
-<?php
+	CloseCon();// Close the connection to our datatbase server
 
-	mysqli_close($conn);// Close the connection to our datatbase server
-
-	// Let's validate our input data.
-	function test_input($data) {
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
-	}
-		
-	// Glom onto the user name and password for MySQL.
-	function getUser() {
-		$myfile = fopen("DB_USER.txt", "r") or die("Unable to open user file!");
-		$file_input = fread($myfile, filesize("DB_USER.txt"));
-		$user_pw = explode(" ", $file_input);
-		fclose($myfile);
-		return $user_pw;
-	}
  ?>
 
  </body>

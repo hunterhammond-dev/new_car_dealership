@@ -1,24 +1,28 @@
+<!-- Lingzhi Nelson -->
+<!-- 11/27/2020 -->
 <!DOCTYPE html>
 <html>
 <body>
 <?php 
     if (!isset($_GET['customerid'])) {
-        header("Location: http://www.localhost/database/CustomerOrder.php"); // go back to orders history page
+        header("Location: http://www.localhost/database/CustomerOrder.php"); 
         return;
     } 
 ?>
 <div id="start">
-    <h2> Add a new order</h2>
-    <h3>Please include all cars applied to add a new order</h3>
+    <h2> Adding a New Order 
+        <?php if(isset($_GET['customerName'])) echo " for " . $_GET['customerName'];?> 
+    </h2>
+    
     <p>
-        <label for = "productSearch">Search for cars:</label>
+        <label for = "productSearch">Search Cars by Brand:</label>
         <input type = "text" id = "product" name = "product" value = "">
         <!--click on the search button, call showCars function and pass in the keyword entered. -->
         <button type = "button" onclick = "showCars(document.getElementById('product').value)" style = "background-color:blue;">Search</button>
     </p>
 
-    <div id="addCars">click select to add cars</div>
-    <p><input type="button" id = "orderBtn" value="Submit" onclick="insertOrders()"></p>
+    <div id="addCars"></div>
+    
 
 </div>
 
@@ -36,8 +40,9 @@
                     "<th>Delete</th>" +
                     "</tr>" +
                     "</thead><tbody>";
-    var tableTail = "</tbody></Table>";
     var tableBody = "";
+    var tableTail = "</tbody></Table>";
+    var tableSubmitButton="<p><input type=\"button\" id = \"orderBtn\" value=\"Submit\" onclick=\"insertOrders()\"></p>";
 
     // selectCars
     // it is called when selecting a car from search results and add to the order; 
@@ -70,7 +75,8 @@
             tableBody += "</tr>";
            
         }
-        document.getElementById("addCars").innerHTML = tableHead + tableBody + tableTail;
+
+        document.getElementById("addCars").innerHTML = tableHead + tableBody + tableTail + tableSubmitButton;
     }//end selectCars
 
     function getPrice(val, pc){
@@ -98,7 +104,8 @@
         }
         tableBody = "";//reset the content of tableBody when selecting a new car and printing all the cars selected in the array 
         //Display Table
-        for (var i = 0; i < cart.length; i++) {
+        var i = 0;
+        for (; i < cart.length; i++) {
             tableBody += "<tr>";
             tableBody += "<td >" + cart[i][0] + "</td>";
             tableBody += "<td>" + cart[i][1] + "</td>";
@@ -107,7 +114,10 @@
             tableBody += '<td><button type = "button" onclick="deleteCars(\''+cart[i][1]+'\')" style="background-color:red;">Delete</button></td>';
             tableBody += "</tr>";
         }
-        document.getElementById("addCars").innerHTML = tableHead + tableBody + tableTail;
+        if(i != 0)
+            document.getElementById("addCars").innerHTML = tableHead + tableBody + tableTail + tableSubmitButton;
+        else
+            document.getElementById("addCars").innerHTML = "";
     }
 </script>
 
@@ -136,7 +146,10 @@
 </script>
 
 
-<div id="orderInsertResult">Submitting your order....</div>
+<div id="orderInsertResult"></div>
+<br><br>
+<button id ="backBtn" type = "button" style="float: right;" onclick="location.href='http://www.localhost/database/CustomerOrder.php?customerid=<?php echo $_GET['customerid']; ?>'">Back to Orders History</button>
+
 <script>
     function insertOrders() {
         var customerid = <?php echo $_GET['customerid']; ?>;//get the target customer id in the URL and pass it to SubmitOrder.php
@@ -151,10 +164,12 @@
                 var data = JSON.parse(this.responseText); //generate array from json string
                 document.getElementById("orderInsertResult").innerHTML = data[1];
                 if (data[0] == "pass") {
+                    //document.getElementById("backBtn").style.display = "block";
                     document.getElementById("searchCars").innerHTML = "";
                     document.getElementById("addCars").innerHTML ="";
                     cart = [];//clear the cart array for next order insertion after successfully submitting an order
                 }
+               
             }
         };
         xhttp.open("GET", "SubmitOrder.php?p=" + customerid+"&q=" + cartJSON, true);
