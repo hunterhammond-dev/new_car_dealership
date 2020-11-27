@@ -62,7 +62,7 @@
   <section class="features-icons bg-light text-center">
     <div class="container">
       <?php
-        $mysqli = new mysqli("localhost", "user", "password", "database");
+        $mysqli = new mysqli("localhost", "root", "RyanDB96!", "cardealership");
         if ($mysqli->connect_errno) {
         echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
