@@ -1,3 +1,7 @@
+<!--
+DB connection methods. DB_USER.txt should contain three values divided by spaces: db_user db_password port_number
+By: Ryan Lenea.
+-->
 <?php
 function OpenCon() {
     $user_info = getUser();

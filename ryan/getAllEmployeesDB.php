@@ -1,3 +1,7 @@
+<!--
+Search all employees.
+By: Ryan Lenea.
+-->
 <?php
 include 'connect.php';
 include 'commonFunctions.php';
