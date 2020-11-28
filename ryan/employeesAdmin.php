@@ -2,19 +2,26 @@
 Main Employee Admin Page.
 By: Ryan Lenea.
 -->
-<!DOCTYPE html>
-<h2>Employee Admin</h2>
-<a href="adminPortalPage.html">Back To Main Admin Portal</a>
-<h3>Enter Employee ID or that employee's first and last name to search</h3>
+<html lang="EN">
+<head>
+    <title>Employee Admin Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+</head>
+
 <body>
+<h2>Employee Admin</h2>
+<a href="../index.html">Back To Main Admin Portal</a>
+<h5>Enter Employee ID or that employee's first and last name to search</h5>
 
 <?php
 include 'connect.php';
 include 'commonFunctions.php';
 ?>
 
-<section class="features-icons bg-light text-center">
-    <div class="container">
+<section>
 
         <!--Main search menu-->
         <form action="editEmployee.php" method="post">
@@ -32,11 +39,6 @@ include 'commonFunctions.php';
             <input type="submit" value="Search">
         </form>
         <!--End Main search menu-->
-
-        <!--        TODO would be nice if this would work...-->
-        <!--            <input type="submit" value="Search" name="addEmployeeBtn" onclick="showEmployee(document.getElementById('idField').value,-->
-        <!--                                                                                            document.getElementById('firstNameField').value,-->
-        <!--                                                                                            document.getElementById('lastNameField').value); return false;">-->
 
         <!--See all employees and add employees buttons-->
         <table>
@@ -58,7 +60,6 @@ include 'commonFunctions.php';
 
         <!--Where ajax places result of see all employees button click query-->
         <div id="tableDisplaySpace"></div>
-    </div>
 
 </section>
 
