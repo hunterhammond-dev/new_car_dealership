@@ -5,7 +5,7 @@
 <body>
 <?php 
     if (!isset($_GET['customerid'])) {
-        header("Location: http://www.localhost/database/CustomerOrder.php"); 
+        header("Location: ./CustomerOrder.php"); 
         return;
     } 
 ?>
@@ -148,7 +148,7 @@
 
 <div id="orderInsertResult"></div>
 <br><br>
-<button id ="backBtn" type = "button" style="float: right;" onclick="location.href='http://www.localhost/database/CustomerOrder.php?customerid=<?php echo $_GET['customerid']; ?>'">Back to Orders History</button>
+<button id ="backBtn" type = "button" style="float: right;" onclick="location.href='./CustomerOrder.php?customerid=<?php echo $_GET['customerid']; ?>'">Back to Orders History</button>
 
 <script>
     function insertOrders() {
