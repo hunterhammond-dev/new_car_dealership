@@ -2,13 +2,12 @@
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Landing Page - Start Bootstrap Theme</title>
+  <title>Carfi.com - Find your next ride.</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +19,7 @@
 
   <!-- Custom styles for this template -->
   <link href="css/landing-page.min.css" rel="stylesheet">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -28,8 +27,8 @@
   <!-- Navigation -->
   <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
-      <a class="btn btn-primary" href="#">Sign In</a>
+    <!--TODO: Hunter put this behind login-->
+      <a class="btn btn-primary" href="admin.html">Employee Sign In</a>
     </div>
   </nav>
 
@@ -39,16 +38,16 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">Build a landing page for your business or project and generate more leads!</h1>
+          <h1 class="mb-5">Search for a vehicle across all of our dealership locations!</h1>
         </div>
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form>
             <div class="form-row">
               <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+                <input type="text" id="search" class="form-control form-control-lg" placeholder="'Audi X3', 'Audi', 'X3', or blank to see all products"  value="">
               </div>
               <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
+                <button type="button" class="btn btn-block btn-lg btn-primary" onclick="showCars(document.getElementById('search').value)">Search!</button>
               </div>
             </div>
           </form>
@@ -57,93 +56,31 @@
     </div>
   </header>
 
+  <div id = "searchResults"></div>
 
-  <!-- RYAN DB TEST -->
-  <section class="features-icons bg-light text-center">
-    <div class="container">
-      <?php
-        $mysqli = new mysqli("localhost", "root", "RyanDB96!", "cardealership");
-        if ($mysqli->connect_errno) {
-        echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-        }
-        echo $mysqli->host_info . "\n";
-
-        $mysqli = new mysqli("127.0.0.1", "user", "password", "database", 3306);
-        if ($mysqli->connect_errno) {
-        echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-        }
-
-        echo $mysqli->host_info . "\n";
-      ?>
-    </div>
-  </section>
-
-
-  <!-- Icons Grid -->
-  <section class="features-icons bg-light text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-screen-desktop m-auto text-primary"></i>
-            </div>
-            <h3>Fully Responsive</h3>
-            <p class="lead mb-0">This theme will look great on any device, no matter the size!</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-layers m-auto text-primary"></i>
-            </div>
-            <h3>Bootstrap 4 Ready</h3>
-            <p class="lead mb-0">Featuring the latest build of the new Bootstrap 4 framework!</p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-              <i class="icon-check m-auto text-primary"></i>
-            </div>
-            <h3>Easy to Use</h3>
-            <p class="lead mb-0">Ready to use with your own content, or customize the source files!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Image Showcases -->
-  <section class="showcase">
+   <!-- Image Showcases -->
+   <section id="categories" class="showcase">
     <div class="container-fluid p-0">
       <div class="row no-gutters">
 
-        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-1.jpg');"></div>
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/audi_suv.jpg');"></div>
         <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-          <h2>Fully Responsive Design</h2>
-          <p class="lead mb-0">When you use a theme created by Start Bootstrap, you know that the theme will look great on any device, whether it's a phone, tablet, or desktop the page will behave responsively!</p>
+          <h2>Shop SUVs</h2>
+          <p class="lead mb-0"><a onclick="showCars('SUV')">Find a large collection of the latest SUVs from Audi, BMW, Tesla & more.</a></p>
         </div>
       </div>
       <div class="row no-gutters">
-        <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/bg-showcase-2.jpg');"></div>
+        <div class="col-lg-6 text-white showcase-img" style="background-image: url('img/cyber.jpg');"><a onclick="showCars('Cybertruck')"></a></div>
         <div class="col-lg-6 my-auto showcase-text">
-          <h2>Updated For Bootstrap 4</h2>
-          <p class="lead mb-0">Newly improved, and full of great utility classes, Bootstrap 4 is leading the way in mobile responsive web development! All of the themes on Start Bootstrap are now using Bootstrap 4!</p>
-        </div>
-      </div>
-      <div class="row no-gutters">
-        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('img/bg-showcase-3.jpg');"></div>
-        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-          <h2>Easy to Use &amp; Customize</h2>
-          <p class="lead mb-0">Landing Page is just HTML and CSS with a splash of SCSS for users who demand some deeper customization options. Out of the box, just add your content and images, and your new landing page will be ready to go!</p>
+          <h2>Tesla Cybertruck</h2>
+          <p class="lead mb-0"><a onclick="showCars('Cyber Truck')">It's so weird, you want it.</a></p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Testimonials -->
-  <section class="testimonials text-center bg-light">
+  <section  id="testimonials" class="testimonials text-center bg-light">
     <div class="container">
       <h2 class="mb-5">What people are saying...</h2>
       <div class="row">
@@ -151,46 +88,22 @@
           <div class="testimonial-item mx-auto mb-5 mb-lg-0">
             <img class="img-fluid rounded-circle mb-3" src="img/testimonials-1.jpg" alt="">
             <h5>Margaret E.</h5>
-            <p class="font-weight-light mb-0">"This is fantastic! Thanks so much guys!"</p>
+            <p class="font-weight-light mb-0">"This is fantastic! I love my new car!"</p>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-            <img class="img-fluid rounded-circle mb-3" src="img/testimonials-2.jpg" alt="">
-            <h5>Fred S.</h5>
-            <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
+            <img class="img-fluid rounded-circle mb-3" src="img/ryguy.jpg" alt="">
+            <h5>Ryan L.</h5>
+            <p class="font-weight-light mb-0">"I found the perfect ride!"</p>
           </div>
         </div>
         <div class="col-lg-4">
           <div class="testimonial-item mx-auto mb-5 mb-lg-0">
             <img class="img-fluid rounded-circle mb-3" src="img/testimonials-3.jpg" alt="">
             <h5>Sarah W.</h5>
-            <p class="font-weight-light mb-0">"Thanks so much for making these free resources available to us!"</p>
+            <p class="font-weight-light mb-0">"Thanks so much for making this!"</p>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Call to Action -->
-  <section class="call-to-action text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <h2 class="mb-4">Ready to get started? Sign up now!</h2>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form>
-            <div class="form-row">
-              <div class="col-12 col-md-9 mb-2 mb-md-0">
-                <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
-              </div>
-              <div class="col-12 col-md-3">
-                <button type="submit" class="btn btn-block btn-lg btn-primary">Sign up!</button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -246,7 +159,78 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
+<script>
+  function showCars(q) {
+    var xhttp;
+  
+    xhttp = new XMLHttpRequest();
+    // Define when we receive answer from server, write the data to result div
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("searchResults").innerHTML = this.responseText;
+            $("#testimonials").hide();
+            $("#categories").hide();
+        }
+    };
+    // Make async get request to server
+    console.log(q);
+    xhttp.open("GET", "customerSearch.php?q="+q, true);
+    xhttp.send();
+  }
+
+  function reset () {
+    $("#tabela1 tbody tr").show();
+    $( "input:checkbox:checked" ).prop( "checked", false );
+  }
+
+  function home () {
+    $("#tabela1").hide();
+    $( "input:checkbox:checked" ).prop( "checked", false );
+    $("#testimonials").show();
+    $("#categories").show();
+    document.getElementById("searchResults").innerHTML = "";
+  }
+
+  function filterResults () {
+        $(".colorcheckbox, .modelcheckbox, .pricecheckbox").on("change", function () {
+          var colorchecked = $(".colorcheckbox:checked").map(function () {
+              return $(this).val()
+          }).get();
+          var modelchecked = $(".modelcheckbox:checked").map(function () {
+              return $(this).val()
+          }).get();
+          var pricechecked = $(".pricecheckbox:checked").map(function () {
+              return $(this).val()
+          }).get();
+
+          var all = $("#tabela1 tbody tr").hide();
+
+          var models = $(".model").filter(function () {
+              var model = $(this).text(),
+                  index = $.inArray(model, modelchecked);
+                  
+              return index >= 0
+          }).parent()
+          if (!models.length) models = all;
+
+          var colors = $(".color").filter(function () {
+              var color = $(this).text(),
+                  index2 = $.inArray(color, colorchecked);
+              return index2 >= 0
+          }).parent()
+          if (!colors.length) colors = all;
+
+          var prices = $(".price").filter(function () {
+              var price = $(this).text(),
+                  index3 = $.inArray(price, pricechecked);
+              return index3 >= 0
+          }).parent()
+          if (!prices.length) prices = all;
+
+          models.filter(colors).filter(prices).show();
+        }).first().change()   
+  } 
+</script>
 </html>

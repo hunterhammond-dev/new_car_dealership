@@ -13,7 +13,7 @@ By: Ryan Lenea.
 
 <body>
 <h2>Employee Admin</h2>
-<a href="../index.html">Back To Main Admin Portal</a>
+<a href="../admin.html">Back To Main Admin Portal</a>
 <h5>Enter Employee ID or that employee's first and last name to search</h5>
 
 <?php

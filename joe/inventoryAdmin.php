@@ -13,7 +13,7 @@ By: Joe Wright and Ryan Lenea.
 
 <body>
 <h2>Inventory Admin</h2>
-<a href="../index.html">Back To Main Admin Portal</a>
+<a href="../admin.html">Back To Main Admin Portal</a>
 <h5>TODO: subhead hear</h5>
 
 <?php

@@ -1,12 +1,8 @@
-<?php /* 
-	   Lingzhi Nelson  
-       11/27/2020  
-	   */?>
 
 <?php
+// author: Lingzhi Nelson
+// date: 11/24/2020
 
-	// this php has all the commonly used functions sucn as database connection, test_inputs
-	include 'Utility.php'; 
 	$flag = 0;
 	$return_result[0] = "fail";
 	$return_result[1] = "";
@@ -52,9 +48,20 @@
 		return;
 	}
 
-	
+	// Go get the User name and password for the MySQL access.
+	$user_pw = getUser();
 	// Create a connection to the database server.
-	OpenCon();
+	$dbhost = "localhost:3308";
+	$dbuser = $user_pw[0];
+	$dbpass = $user_pw[1];
+	$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+	if(! $conn ){
+		echo "Error: Unable to connect to MySQL." . "<br>\n";
+		echo "Debugging errno: " . mysqli_connect_errno() . "<br>\n";
+		echo "Debugging error: " . mysqli_connect_error() . "<br>\n";
+		die("Could not connect: " . mysqli_error()); 
+	}
+	mysqli_select_db($conn, "cardealership");
 
 	// Turn autocommit off
 	mysqli_autocommit($conn, FALSE);
@@ -122,11 +129,11 @@
 		// transaction completed successfully
 		if ($pass) {
 			mysqli_commit($conn);
-			$return_result[1] .= "Insertions of order and adjustment of stock were executed successfully!<br>";
+			$return_result[1] .= "Insertions to order and orderdetails tables were executed successfully; <br> quantity in stock is updated as well!<br>";
 			$return_result[0] = "pass"; //mark the result as "pass"
 		} else {
 			mysqli_rollback($conn);
-			$return_result[1] .= "All three operations were rolled back.<br>";
+			$return_result[1] .= "All 3 operations were rolled back.<br>";
 		}
 
 
@@ -176,7 +183,7 @@
 		}
 	 
 		// Close the connection to our datatbase server
-		CloseCon();
+		mysqli_close($conn);
 
 		//convert the array to a json string
 		echo json_encode($return_result);
@@ -186,6 +193,26 @@
 	function printJson($return_result) {
 		echo json_encode($return_result); //convert the array to a json string & return it to AJAX call insertOrders() from AddOrder.php
 		return;
+	}
+	
+
+	// Let's validate our input data.
+	function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
+	
+	// Glom onto the user name and password for MySQL.
+	function getUser() {
+		$myfile = fopen("DB_USER.txt", "r") or die("Unable to open user file!");
+		$file_input = fread($myfile, filesize("DB_USER.txt"));
+		// https://www.php.net/manual/en/function.explode.php
+		$user_pw = explode(" ", $file_input);
+		// echo "<p>From DB_USER.txt: User name = " . $user_pw[0] . ", Password  = " . $user_pw[1];
+		fclose($myfile);
+		return $user_pw;
 	}
 
 ?>
