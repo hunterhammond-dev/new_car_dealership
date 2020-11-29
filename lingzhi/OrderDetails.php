@@ -1,11 +1,12 @@
-
+<!-- Lingzhi Nelson -->
+<!-- 11/27/2020 -->
+<br>
 <?php
-	echo "Order Number: ".$_GET['ordernum']." <BR>";  
+	echo "Order Number: ".$_GET['ordernum'];  
 ?>
 
 <!-- build the orderdetail table-->
 <table style="width:100%; border: 1px solid black; text-align: center;">
-            <caption> Order Details</caption>
             <thead>
                 <tr>
                     <th>Product Name</th>
