@@ -38,6 +38,7 @@ include 'connect.php';
         <label for="titleNew">Job Title:</label>
         <select name="titleNew" id="titleNew">
         <?php
+
                 // Provide list of all job-titles in databases.
                 $conn = OpenCon();
                 $sql = "SELECT jobTitle FROM employees;";
