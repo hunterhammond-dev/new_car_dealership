@@ -30,7 +30,7 @@
 	// Glom onto the user name, password, and port number for MySQL.
 	function getUser() {
 		$myfile = fopen("../DB_USER.txt", "r") or die("Unable to open user file!");
-		$file_input = fread($myfile, filesize("DB_USER.txt"));
+		$file_input = fread($myfile, filesize("../DB_USER.txt"));
 		$user_pw = explode(" ", $file_input);
 		fclose($myfile);
 		return $user_pw;
