@@ -1,7 +1,3 @@
-<!--
-General purpose methods used by multiple files.
-By: Ryan Lenea.
--->
 <?php
 
 // Print table with all column headers of an input result set.
