@@ -21,9 +21,6 @@ $officeCodeNew = $_POST["officeCodeNewField"];
 $titleNew = $_POST["titleNewField"];
 $sqlPS = "UPDATE employees SET firstName = ?, lastName = ?, extension = ?, email = ?, officeCode = ?, jobTitle = ? WHERE employeeNumber = ?";
 
-// TODO get ajax validation so can have in shared validation method file
-//echo '<script type="text/javascript">' . "validate('{$firstNew}', '{$lastNew}', '{$extensionNew}', '{$emailNew}');" . '</script>';
-
 // Validate fields (ideally this would be be done both client side with js and server side here.
 if(!1 == preg_match('/x[0-9]{4}/', $extensionNew) ) {
     $passedValidation = False;
@@ -61,17 +58,17 @@ if ($passedValidation == True) {
     $psId = $id;
 
     mysqli_stmt_execute($result);
-    mysqli_commit($conn);
     echo mysqli_error($conn);
 
     if (!$result) {
         echo "<br>Error performing update: " . mysqli_error($conn);
+        mysqli_rollback($conn);
         mysqli_stmt_close($result);
         CloseCon($conn);
         // Back to enter employee info page.
         echo "<p><a href='javascript:history.back()'>Back To Edit Screen</a></p>";
     } else {
-//        mysqli_commit($conn);
+        mysqli_commit($conn);
         mysqli_stmt_close($result);
         CloseCon($conn);
         echo "<p/>Successfully updated record";
@@ -90,8 +87,6 @@ if ($passedValidation == True) {
 ?>
 
 <!--<div id="displaySpace"></div>-->
-
-
 <!--<script>-->
 <!--    // Ajax call to get all employees and display on same page.-->
 <!--    function validate(firstNew, lastNew, extensionNew, emailNew) {-->

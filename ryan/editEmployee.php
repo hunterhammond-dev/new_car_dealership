@@ -17,7 +17,7 @@ include 'commonFunctions.php';
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 $first = isset($_POST['first']) ? $_POST['first'] : '';
 $last = isset($_POST['last']) ? $_POST['last'] : '';
-$employeeNumber=""; //TODO need this?
+$employeeNumber="";
 
 $conn = OpenCon();
 
@@ -53,6 +53,7 @@ if ($result->num_rows > 0) {
 CloseCon($conn);
 ?>
 
+<!--example of how would do with AJAX-->
 <!--<form>-->
 <!--    <br>-->
 <!--   <input hidden type="text" id="id" value="--><?php //echo $employeeNumber ?><!--"><br>-->
@@ -110,7 +111,7 @@ CloseCon($conn);
             <?php
             // Provide list of all job titles in databases. Employee's current title is selected by default.
             $conn = OpenCon();
-            $sql = "SELECT jobTitle FROM employees;";
+            $sql = "SELECT DISTINCT jobTitle FROM employees;";
             $result = $conn->query($sql);
             while($row = $result->fetch_assoc()) {
                 if ($jobTitle == $row['jobTitle']) {
@@ -140,7 +141,7 @@ CloseCon($conn);
         <input type="submit">
 </form>
 
-<!---->
+<!--example of how would do with AJAX-->
 <!--<script>-->
 <!--    function updateEmployee(employeeNumber, firstSearched, lastSearched, extensionNew, email, officeCode, jobTitle, emStatus) {-->
 <!--        document.getElementById("statusSpace").innerHTML = "run";-->
