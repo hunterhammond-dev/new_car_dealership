@@ -40,7 +40,7 @@ include 'connect.php';
         <?php
                 // Provide list of all job-titles in databases.
                 $conn = OpenCon();
-                $sql = "SELECT jobTitle FROM employees;";
+                $sql = "SELECT DISTINCT jobTitle FROM employees;";
                 $result = $conn->query($sql);
                 while($row = $result->fetch_assoc()) {
                     echo "<option value=" . $row['jobTitle'] . ">" . $row['jobTitle'] . "</option>";
