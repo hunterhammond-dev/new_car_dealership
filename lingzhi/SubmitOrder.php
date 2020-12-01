@@ -21,24 +21,24 @@
 
 		//no car is selected
 		if(count($cart)==0){
-			$return_result[1] .= "You must include car(s), price and quantity to add an order!\n";
+			$return_result[1] .= "<div class='alert alert-warning' role='alert'>You must include car(s), price and quantity to add an order!\n</div>";
 			printJson($return_result);
 			return;
 		}
 		
 		for ($i = 0; $i < count($cart); $i++) {
 			if ((!is_numeric($cart[$i][2])) || (!is_numeric($cart[$i][3]))){
-				$return_result[1] .='Enter numbers in the quntity and price fields!';
+				$return_result[1] .="<div class='alert alert-warning' role='alert'>Enter numbers in the quntity and price fields!</div>";
 				printJson($return_result);
 				return;
 
 			} else if( $cart[$i][2]<=0 || $cart[$i][3]<=0 ){ // price and quantity are negative numbers
-				$return_result[1] .= "Price and quantity must be greater than zero.";
+				$return_result[1] .= "<div class='alert alert-warning' role='alert'>Price and quantity must be greater than zero!</div>";
 				printJson($return_result);
 				return;
 
 			} else if( $cart[$i][3] > $cart[$i][4] ){ //quantities added to order > in stock
-				$return_result[1] .= $cart[$i][0]." only has ".$cart[$i][4]." in stock! <br> Your order exceeds quantity in stock!";
+				$return_result[1] .= "<div class='alert alert-warning' role='alert'>".$cart[$i][0]." only has ".$cart[$i][4]." in stock! <br> Your order exceeds quantity in stock!</div>";
 				printJson($return_result);
 				return;
 
@@ -47,7 +47,7 @@
 			}
 		}//end for
 	}else{
-		$return_result[1] .= "Unable to process your order!";
+		$return_result[1] .= "<div class='alert alert-warning' role='alert'>Unable to process your order!</div>";
 		printJson($return_result);
 		return;
 	}
@@ -122,11 +122,11 @@
 		// transaction completed successfully
 		if ($pass) {
 			mysqli_commit($conn);
-			$return_result[1] .= "Insertions of order and adjustment of stock were executed successfully!<br>";
+			$return_result[1] .= "<div class='alert alert-success' role='alert'>Insertions of order and adjustment of stock were executed successfully!<br>";
 			$return_result[0] = "pass"; //mark the result as "pass"
 		} else {
 			mysqli_rollback($conn);
-			$return_result[1] .= "All three operations were rolled back.<br>";
+			$return_result[1] .= "<div class='alert alert-warning' role='alert'>All three operations were rolled back.</div>";
 		}
 
 
@@ -138,15 +138,15 @@
 			mysqli_free_result($result);//free result set
 		}
 		if($maxOrderNumAfter == $maxOrderNum){
-			$return_result[1] .= "You have successfully added an order!";
+			$return_result[1] .= "You have successfully added an order!</div>";
 		
 			$sql = "SELECT OD.orderNumber, O.orderDate, concat(Year, ' ', Brand,' ', Model, ' ', Type, ' ', Color) AS productName, quantityOrdered, priceEach, concat(customerFirstName, ' ', customerLastName) AS customerName, O.status
 			FROM cardealership.orderdetails AS OD JOIN cardealership.products AS P ON OD.productCode = P.productCode JOIN cardealership.orders AS O ON OD.orderNumber = O.orderNumber JOIN cardealership.customers AS C ON C.customerNumber = O.customerNumber 
 			WHERE O.orderNumber = ".$maxOrderNumAfter;
 
 			if ($result = mysqli_query($conn,$sql)) {
-				$return_result[1] .= '<table style="width:100%; border: 1px solid black; text-align: center;">
-					<thead>
+				$return_result[1] .= '<table class="table table-md table-bordered table-hover">
+					<thead class="thead-dark">
 						<tr>
 							<th>Order Number</th>
 							<th>Order Date</th>

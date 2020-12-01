@@ -5,9 +5,9 @@
 <body>
 
 <!-- build the car search results table-->
-<table style="width:100%; border: 1px solid black; text-align: center; background-color: lightblue;">
-            <caption> Search results</caption>
-            <thead>
+<table class='table table-sm table-bordered table-hover'>
+            <caption class='text-center'> Cars Available</caption>
+            <thead class='thead-dark'>
                 <tr>
                     <th>Product Name</th>
                     <th>Product Code</th>
@@ -40,8 +40,8 @@
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
-						<td><button type = \"button\" onclick=\"selectCars('".$row["productName"]."', '". $row["productCode"]."', '".$row["Quantity"].
-						"')\" style=\"background-color:red;\">Select</button></td>
+						<td><button type = \"button\" class='btn btn-secondary' onclick=\"selectCars('".$row["productName"]."', '". $row["productCode"]."', '".$row["Quantity"].
+						"')\">Select</button></td>
 						</tr>", 
 					$row["productName"], 
 					$row["productCode"],
@@ -54,7 +54,7 @@
 			"</tbody>
 			<tfoot>
 				<tr>
-					<td colspan=\"1\">Search Results: %s</td>
+					<td colspan=\"4\">Search Results: %s</td>
 				</tr>
 			</tfoot>
 		 </table>", $count);	 

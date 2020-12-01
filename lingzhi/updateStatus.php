@@ -14,6 +14,7 @@
 		echo "Debugging error: " . mysqli_connect_error() . "<br>\n";
 		die("Could not connect: " . mysqli_error()); 
 	}
+
 	// Create a string to update the order status.
 	$sql = "UPDATE cardealership.orders SET status = '".$_GET['status']."', shippedDate = CURRENT_DATE() WHERE orderNumber =". $_GET['ordernumber'];
 
@@ -60,7 +61,7 @@
 			$updatedQuantity = $quantityCancelled[$i];
 			$productCode = $pc[$i];
 			mysqli_stmt_execute($result);
-		}
+		} // end for
 		if (!$result) {
 			$pass = false;
 			echo "Error details: " . mysqli_error($conn) . ".";
@@ -70,16 +71,16 @@
 		// transaction completed successfully
 		if ($pass) {
 			mysqli_commit($conn);
-			echo "Order status and inventory adjustment were executed successfully!<br>";
+			echo "<div class='alert alert-success' role='alert'>Order status and inventory adjustment were executed successfully!</div>";
 			
 		} else {
 			mysqli_rollback($conn);
-			echo "Order status and inventory adjustment were rolled back.<br>";
+			echo "<div class='alert alert-danger' role='alert'>Order status and inventory adjustment were rolled back.</div>";
 		}
 	} else {// "shipped"
 		
 		if (mysqli_query($conn, $sql)) {
-			echo "Order status was updated successfully.<br>";
+			echo "<div class='alert alert-success' role='alert'>Order status was updated successfully.</div>";
 		} else {
 			echo "ERROR: Could not execute $sql. " . mysqli_error($conn)."<br>";
 		}
