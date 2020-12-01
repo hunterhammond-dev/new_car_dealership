@@ -58,13 +58,8 @@ if (isset($_GET["employeeNumber"]) && $_GET["employeeNumber"] != "") {
 <!-- end form -->
 
 <?php
-// Go get the User name and password for the MySQL access.
-$user_pw = getUser();
-// Create a connection to the database server.
-$dbhost = "localhost:3307";
-$dbuser = $user_pw[0];
-$dbpass = $user_pw[1];
-$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+include 'connect.php';
+$conn = OpenCon();
 if (! $conn ) {
     echo "Error: Unable to connect to MySQL." . "<br>\n";
     echo "Debugging errno: " . mysqli_connect_errno() . "<br>\n";

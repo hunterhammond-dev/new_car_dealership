@@ -1,17 +1,6 @@
 <?php
-// Go get the User name and password for the MySQL access.
-$user_pw = getUser();
-// Create a connection to the database server.
-$dbhost = "localhost:3307";
-$dbuser = $user_pw[0];
-$dbpass = $user_pw[1];
-$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
-if (! $conn ) {
-    echo "Error: Unable to connect to MySQL." . "<br>\n";
-    echo "Debugging errno: " . mysqli_connect_errno() . "<br>\n";
-    echo "Debugging error: " . mysqli_connect_error() . "<br>\n";
-    die("Could not connect: " . mysqli_error());
-}
+include 'connect.php';
+$conn = OpenCon();
 
 //connect to cardealership schema
 mysqli_select_db($conn, "cardealership");

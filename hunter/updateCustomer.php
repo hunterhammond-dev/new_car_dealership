@@ -75,13 +75,8 @@ if (isset($_GET["customerNumber"]) && $_GET["customerNumber"] != "") {
 <!-- end form -->
 
 <?php
-// Go get the User name and password for the MySQL access.
-$user_pw = getUser();
-// Create a connection to the database server.
-$dbhost = "localhost:3307";
-$dbuser = $user_pw[0];
-$dbpass = $user_pw[1];
-$conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+include 'connect.php';
+$conn = OpenCon();
 if (! $conn ) {
     echo "Error: Unable to connect to MySQL." . "<br>\n";
     echo "Debugging errno: " . mysqli_connect_errno() . "<br>\n";
@@ -151,14 +146,6 @@ if (($result = mysqli_query($conn,$customerSql)) && ($row = mysqli_fetch_assoc($
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
-    }
-
-    function getUser() {
-        $myfile = fopen("../DB_USER.txt", "r") or die("Unable to open user file!");
-        $file_input = fread($myfile, filesize("../DB_USER.txt"));
-        $user_pw = explode(" ", $file_input);
-        fclose($myfile);
-        return $user_pw;
     }
     ?>
     </tbody>
